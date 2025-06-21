@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas Notas</title>
+</head>
+<body>
+    <h1>Minhas Notas</h1>
+    <div id="notes-container">Carregando...</div>
+
+    <a href="/notes/create">Criar nova nota</a>
+
+    <script>
+        fetch('/notes/list')
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('notes-container');
+                if (data.notes.length === 0) {
+                    container.innerHTML = '<p>Nenhuma nota encontrada.</p>';
+                } else {
+                    container.innerHTML = data.notes.map(note => `
+                        <div>
+                            <a href="/notes/${note.id}">
+                                <h2>${note.title}</h2>
+                                <p><strong>Info:</strong> ${note.info}</p>
+                            </a>
+                        </div>
+                    `).join('');
+                }
+            })
+            .catch(() => {
+                document.getElementById('notes-container').innerHTML = '<p>Erro ao carregar notas.</p>';
+            });
+    </script>
+</body>
+</html>

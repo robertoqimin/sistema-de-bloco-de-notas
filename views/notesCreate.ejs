@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Criar uma nova nota</h1>
+    <form action="/notes/create" method="POST">
+        <label for="title">Título:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="info">Descrição:</label>
+        <input type="text" id="info" name="info" required>
+
+        <label for="content">Conteúdo:</label>
+        <textarea id="content" name="content" required></textarea>
+
+        <button type="submit">Criar Nota</button>
+
+</body>
+</html>
