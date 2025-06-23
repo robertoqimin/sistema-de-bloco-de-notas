@@ -31,10 +31,10 @@ router.post('/register', async (req, res) =>{
 router.post('/login', (req, res) => {
     const { email, password } = req.body;
     db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
-        if (err || results.length === 0) return res.status(401).send('Usuário não encontrado');
+        if (err || results.length === 0) return res.status(401).send('Credenciais inválidas');
         const user = results[0];
         const match = await bcrypt.compare(password, user.password);
-        if (!match) return res.status(401).send('Senha inválida');
+        if (!match) return res.status(401).send('Credenciais inválidas');
         const token = jwt.sign({ id: user.id, username: user.username }, SECRET, { expiresIn: '1h' });
         // Envia o token como cookie
         res.cookie('token', token, { httpOnly: true });
