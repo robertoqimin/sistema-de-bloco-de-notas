@@ -3,68 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Nota</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/notesEdit.css">
 </head>
 <body>
     <%- include('partials/header') %>
-    <style>
-        .edit-note-container {
-            max-width: 500px;
-            margin: 40px auto;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 32px 24px;
-        }
-        .edit-note-container h1 {
-            text-align: center;
-            margin-bottom: 24px;
-            color: #333;
-        }
-        .edit-note-container form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .edit-note-container label {
-            font-weight: 500;
-            margin-bottom: 4px;
-            color: #444;
-        }
-        .edit-note-container input[type="text"],
-        .edit-note-container textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-            background: #f9f9f9;
-            resize: vertical;
-        }
-        .edit-note-container button {
-            background: #1976d2;
-            color: #fff;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .edit-note-container button:hover {
-            background: #1565c0;
-        }
-        .edit-note-container .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #1976d2;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .edit-note-container .back-link:hover {
-            text-decoration: underline;
-        }
-    </style>
 
     <div class="edit-note-container">
         <h1>Editar Nota</h1>

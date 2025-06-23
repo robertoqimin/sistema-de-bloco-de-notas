@@ -3,70 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Nota</title>
+    <link rel="stylesheet" href="/css/note.css">
 </head>
 <body>
     <%- include('partials/header')%>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f7f7f7;
-            margin: 0;
-            padding: 0;
-        }
-        .note-container {
-            background: #fff;
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 32px 28px 24px 28px;
-            border-radius: 10px;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-        }
-        .note-title {
-            font-size: 1.7em;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #2d3748;
-        }
-        .note-content {
-            margin: 18px 0 22px 0;
-            font-size: 1.15em;
-            color: #444;
-            white-space: pre-wrap;
-        }
-        .note-container div {
-            margin-bottom: 8px;
-        }
-        hr {
-            margin: 24px 0;
-            border: none;
-            border-top: 1px solid #e2e8f0;
-        }
-        .note-actions {
-            display: flex;
-            justify-content: space-between;
-            gap: 18px;
-            align-items: center;
-        }
-        .note-actions a, .note-actions button {
-            background: #3182ce;
-            color: #fff;
-            padding: 8px 18px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .note-actions a:hover, .note-actions button:hover {
-            background: #225ea8;
-        }
-        .note-actions form {
-            display: inline;
-            margin: 0;
-        }
-    </style>
     <div class="note-container">
         <div class="note-actions">
             <a href="/notes">Voltar</a>
