@@ -5,10 +5,76 @@
     <title>Minhas Notas</title>
 </head>
 <body>
-    <h1>Minhas Notas</h1>
-    <div id="notes-container">Carregando...</div>
+    <%- include('partials/header') %>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 32px 24px 24px 24px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 32px;
+        }
+        #notes-container > div {
+            background: #f0f4fa;
+            border-radius: 6px;
+            margin-bottom: 18px;
+            padding: 18px 16px;
+            transition: box-shadow 0.2s;
+        }
+        #notes-container > div:hover {
+            box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+        }
+        #notes-container a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        #notes-container h2 {
+            margin: 0 0 8px 0;
+            font-size: 1.2em;
+            color: #2a4d8f;
+        }
+        #notes-container p {
+            margin: 0;
+            color: #444;
+        }
+        .new-note-btn {
+            display: block;
+            width: 100%;
+            max-width: 220px;
+            margin: 32px auto 0 auto;
+            background: #4078c0;
+            color: #fff;
+            text-align: center;
+            padding: 12px 0;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1em;
+            transition: background 0.2s;
+        }
+        .new-note-btn:hover {
+            background: #2a4d8f;
+        }
+    </style>
 
-    <a href="/notes/create">Criar nova nota</a>
+    <div class="container">
+        <h1>Minhas Notas</h1>
+        <div id="notes-container"></div>
+        <a href="/notes/create" class="new-note-btn">Criar nova nota</a>
+    </div>
 
     <script>
         fetch('/notes/list')
@@ -16,13 +82,13 @@
             .then(data => {
                 const container = document.getElementById('notes-container');
                 if (data.notes.length === 0) {
-                    container.innerHTML = '<p>Nenhuma nota encontrada.</p>';
+                    container.innerHTML = '<p>Nenhuma nota criada.</p>';
                 } else {
                     container.innerHTML = data.notes.map(note => `
                         <div>
                             <a href="/notes/${note.id}">
                                 <h2>${note.title}</h2>
-                                <p><strong>Info:</strong> ${note.info}</p>
+                                <p><strong>Descrição:</strong> ${note.info}</p>
                             </a>
                         </div>
                     `).join('');

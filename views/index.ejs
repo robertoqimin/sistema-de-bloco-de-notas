@@ -6,9 +6,52 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>PAGINA INICIAL</h1>
-    <p>SISTEMA DE BLOCO DE NOTAS</p>
-    <a href="/login"><button>LOGAR</button></a>
-    <a href="/register"><button>CADASTRAR</button></a>
+    <%- include('partials/header') %>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+        .notas-interface {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 32px 24px;
+        }
+        .notas-header h1 {
+            margin: 0 0 16px 0;
+            text-align: center;
+            font-size: 2.2em;
+            color: #2d3748;
+            letter-spacing: 1px;
+        }
+        .notas-descricao p {
+            color: #4a5568;
+            text-align: justify;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        @media (max-width: 700px) {
+            .notas-interface {
+                padding: 16px 8px;
+            }
+        }
+    </style>
+    <main class="notas-interface">
+        <section class="notas-header">
+            <h1>Notas</h1>
+        </section>
+        <section class="notas-descricao">
+            <p>
+                Plataforma online que permite aos usuários criar, editar, organizar e acessar anotações de forma prática e rápida. Ideal para estudos, trabalho ou uso pessoal, sincronização em nuvem e proteção por senha.
+            </p>
+        </section>
+    </main>
+
+
 </body>
 </html>

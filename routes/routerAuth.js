@@ -38,38 +38,15 @@ router.post('/login', (req, res) => {
         const token = jwt.sign({ id: user.id, username: user.username }, SECRET, { expiresIn: '1h' });
         // Envia o token como cookie
         res.cookie('token', token, { httpOnly: true });
-        res.redirect('/notes');
+        res.redirect('/');
     });
 });
 
-// Middleware para verificar token
-function verifyToken(req, res, next) {
-    // Tenta obter o token do header, query ou cookie
-    const auth = req.headers.authorization || req.query.token || (req.cookies && req.cookies.token);
-    let token;
-    if (auth && auth.startsWith && auth.startsWith('Bearer ')) {
-        token = auth.split(' ')[1];
-    } else if (typeof auth === 'string') {
-        token = auth;
-    }
-    // Se não encontrou, tenta pegar do cookie
-    if (!token && req.cookies && req.cookies.token) {
-        token = req.cookies.token;
-    }
-    if (!token) return res.status(403).send('Não logado');
-    try {
-        req.user = jwt.verify(token, SECRET);
-        next();
-    } catch {
-        res.status(403).send('Token inválido');
-    }
-}
 
-
-router.get('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
     // Limpa o cookie do token
     res.clearCookie('token');
-    res.redirect('/login');
+    res.redirect('/');
 });
 
 module.exports = router;
