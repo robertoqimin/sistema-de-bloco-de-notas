@@ -42,6 +42,7 @@ router.get('/notes/create', (req, res) => {
     });
 });
 
+
 router.post('/notes/create', (req, res) => {
     // Verifica se o usuário está autenticado
     const token = req.cookies.token;
@@ -49,7 +50,7 @@ router.post('/notes/create', (req, res) => {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    // Verifica o token JWT
+    // Verificar token JWT
     jws.verify(token, 'chave-secreta', (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
@@ -70,7 +71,6 @@ router.post('/notes/create', (req, res) => {
     });
 });
 
-// Rota para mostrar as notas criadas pelo usuário autenticado
 
 
 router.get('/notes/list', (req, res) => {
@@ -86,6 +86,7 @@ router.get('/notes/list', (req, res) => {
         });
     });
 });
+
 
 router.get('/notes/:id', (req, res) => {
     const token = req.cookies.token;
@@ -115,32 +116,7 @@ router.get('/notes/:id', (req, res) => {
     });
 });
 
-router.put('/notes/:id', (req, res) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
-    }
 
-    jws.verify(token, 'chave-secreta', (err, decoded) => {
-        if (err) {
-            return res.status(401).send('Token inválido ou expirado.');
-        }
-
-        const noteId = req.params.id;
-        const { title, info, content } = req.body;
-
-        db.query(
-            'UPDATE notes SET title = ?, info = ?, content = ? WHERE id = ? AND username_id = ?',
-            [title, info, content, noteId, decoded.id],
-            (err) => {
-                if (err) {
-                    return res.status(500).send('Erro ao atualizar nota');
-                }
-                res.redirect(`/notes/${noteId}`);
-            }
-        );
-    });
-});
 
 router.delete('/notes/:id', (req, res) => {
     const token = req.cookies.token;
@@ -167,6 +143,7 @@ router.delete('/notes/:id', (req, res) => {
         );
     });
 });
+
 
 router.get('/notes/:id/edit', (req, res) => {
     const token = req.cookies.token;
@@ -196,7 +173,7 @@ router.get('/notes/:id/edit', (req, res) => {
     });
 });
 
-// Adiciona rota POST para editar nota via formulário HTML
+
 router.post('/notes/:id/edit', (req, res) => {
     const token = req.cookies.token;
     if (!token) {

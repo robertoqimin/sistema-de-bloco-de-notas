@@ -17,12 +17,13 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.use(express.static(path.join(__dirname, 'views', 'public')))
 
+//Conseguir pegar os dados do back-end e enviar para o front-end
 app.use((req, res, next) => {
   const token = req.cookies?.token;
   if (token) {
     try {
       req.user = jwt.verify(token, SECRET);
-      res.locals.user = req.user; // Torna disponível nas views
+      res.locals.user = req.user;
     } catch (err) {
       res.locals.user = null;
     }
