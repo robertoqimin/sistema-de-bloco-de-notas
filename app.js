@@ -3,8 +3,8 @@ const path = require('path')
 const db = require('./db')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken');
-const SECRET = 'chave-secreta';
 
+const SECRET = 'chave-secreta';
 const PORT = 3000;
 
 app = express();
