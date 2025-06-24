@@ -44,31 +44,6 @@ app.use(routerIndex)
 app.use(routerAuth)
 app.use(routerNotes)
 
-// Middleware para verificar token
-function verifyToken(req, res, next) {
-    // Tenta obter o token do header, query ou cookie
-    const auth = req.headers.authorization || req.query.token || (req.cookies && req.cookies.token);
-    let token;
-    if (auth && auth.startsWith && auth.startsWith('Bearer ')) {
-        token = auth.split(' ')[1];
-    } else if (typeof auth === 'string') {
-        token = auth;
-    }
-    // Se não encontrou, tenta pegar do cookie
-    if (!token && req.cookies && req.cookies.token) {
-        token = req.cookies.token;
-    }
-    if (!token) return res.status(403).send('Não logado');
-    try {
-        req.user = jwt.verify(token, SECRET);
-        next();
-    } catch {
-        res.status(403).send('Token inválido');
-    }
-}
-
-
-
 app.listen(PORT, () =>{
     console.log("porta 127.0.0.1:3000")
 });
