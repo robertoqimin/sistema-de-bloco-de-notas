@@ -36,7 +36,7 @@ router.post('/login', (req, res) => {
         const match = await bcrypt.compare(password, user.password);
         if (!match) return res.status(401).send('Credenciais inválidas');
         const token = jwt.sign({ id: user.id, username: user.username }, SECRET, { expiresIn: '1h' });
-        // Envia o token como cookie
+
         res.cookie('token', token, { httpOnly: true });
         res.redirect('/');
     });
@@ -44,7 +44,7 @@ router.post('/login', (req, res) => {
 
 
 router.post('/logout', (req, res) => {
-    // Limpa o cookie do token
+
     res.clearCookie('token');
     res.redirect('/');
 });

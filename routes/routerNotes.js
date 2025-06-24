@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const db = require('../db');
-const jws = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const methodOverride = require('method-override');
 
 const SECRET = 'chave-secreta';
@@ -15,7 +15,7 @@ router.get('/notes', (req, res) => {
     }
 
     // Verifica o token JWT
-    jws.verify(token, SECRET, (err, decoded) => {
+    jwt.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
@@ -32,12 +32,11 @@ router.get('/notes/create', (req, res) => {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    jws.verify(token, SECRET, (err, decoded) => {
+    jwt.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
 
-        // Se o token for válido, renderiza a página de criação de notas
         res.render(path.join(__dirname, '../', 'views', 'notesCreate'), { user: decoded });
     });
 });
@@ -49,7 +48,7 @@ router.post('/notes/create', (req, res) => {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    jws.verify(token, SECRET, (err, decoded) => {
+    jwt.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
@@ -74,7 +73,7 @@ router.get('/notes/list', (req, res) => {
     const token = req.cookies.token;
     if (!token) return res.status(401).json({ error: 'Token ausente' });
 
-    jws.verify(token, SECRET, (err, decoded) => {
+    jwt.verify(token, SECRET, (err, decoded) => {
         if (err) return res.status(401).json({ error: 'Token inválido' });
 
         db.query('SELECT * FROM notes WHERE username_id = ?', [decoded.id], (err, results) => {
@@ -91,7 +90,7 @@ router.get('/notes/:id', (req, res) => {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    jws.verify(token, SECRET, (err, decoded) => {
+    jwt.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
@@ -114,41 +113,13 @@ router.get('/notes/:id', (req, res) => {
 });
 
 
-
-router.delete('/notes/:id', (req, res) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
-    }
-
-    jws.verify(token, SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).send('Token inválido ou expirado.');
-        }
-
-        const noteId = req.params.id;
-
-        db.query(
-            'DELETE FROM notes WHERE id = ? AND username_id = ?',
-            [noteId, decoded.id],
-            (err) => {
-                if (err) {
-                    return res.status(500).send('Erro ao deletar nota');
-                }
-                res.redirect('/note/:id');
-            }
-        );
-    });
-});
-
-
 router.get('/notes/:id/edit', (req, res) => {
     const token = req.cookies.token;
     if (!token) {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    jws.verify(token, SECRET, (err, decoded) => {
+    jwt.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
@@ -177,7 +148,7 @@ router.post('/notes/:id/edit', (req, res) => {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    jws.verify(token, SECRET, (err, decoded) => {
+    jwt.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
@@ -204,7 +175,7 @@ router.post('/notes/:id/delete', (req, res) => {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    jws.verify(token, SECRET, (err, decoded) => {
+    jwt.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
