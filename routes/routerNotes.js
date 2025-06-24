@@ -5,6 +5,8 @@ const db = require('../db');
 const jws = require('jsonwebtoken');
 const methodOverride = require('method-override');
 
+const SECRET = 'chave-secreta';
+
 router.get('/notes', (req, res) => {
     // Verifica se o usuário está autenticado
     const token = req.cookies.token;
@@ -13,7 +15,7 @@ router.get('/notes', (req, res) => {
     }
 
     // Verifica o token JWT
-    jws.verify(token, 'chave-secreta', (err, decoded) => {
+    jws.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
@@ -25,14 +27,12 @@ router.get('/notes', (req, res) => {
 
 
 router.get('/notes/create', (req, res) => {
-    // Verifica se o usuário está autenticado
     const token = req.cookies.token;
     if (!token) {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    // Verifica o token JWT
-    jws.verify(token, 'chave-secreta', (err, decoded) => {
+    jws.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
@@ -44,19 +44,16 @@ router.get('/notes/create', (req, res) => {
 
 
 router.post('/notes/create', (req, res) => {
-    // Verifica se o usuário está autenticado
     const token = req.cookies.token;
     if (!token) {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    // Verificar token JWT
-    jws.verify(token, 'chave-secreta', (err, decoded) => {
+    jws.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
 
-        // Se o token for válido, insere a nota no banco de dados
         const { title, info, content } = req.body;    
         db.query(
             'INSERT INTO notes (title, info, content, username_id) VALUES (?, ?, ?, ?)',
@@ -77,7 +74,7 @@ router.get('/notes/list', (req, res) => {
     const token = req.cookies.token;
     if (!token) return res.status(401).json({ error: 'Token ausente' });
 
-    jws.verify(token, 'chave-secreta', (err, decoded) => {
+    jws.verify(token, SECRET, (err, decoded) => {
         if (err) return res.status(401).json({ error: 'Token inválido' });
 
         db.query('SELECT * FROM notes WHERE username_id = ?', [decoded.id], (err, results) => {
@@ -94,7 +91,7 @@ router.get('/notes/:id', (req, res) => {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    jws.verify(token, 'chave-secreta', (err, decoded) => {
+    jws.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
@@ -124,7 +121,7 @@ router.delete('/notes/:id', (req, res) => {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    jws.verify(token, 'chave-secreta', (err, decoded) => {
+    jws.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
@@ -151,7 +148,7 @@ router.get('/notes/:id/edit', (req, res) => {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    jws.verify(token, 'chave-secreta', (err, decoded) => {
+    jws.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
@@ -180,7 +177,7 @@ router.post('/notes/:id/edit', (req, res) => {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    jws.verify(token, 'chave-secreta', (err, decoded) => {
+    jws.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }
@@ -207,7 +204,7 @@ router.post('/notes/:id/delete', (req, res) => {
         return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
     }
 
-    jws.verify(token, 'chave-secreta', (err, decoded) => {
+    jws.verify(token, SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).send('Token inválido ou expirado.');
         }

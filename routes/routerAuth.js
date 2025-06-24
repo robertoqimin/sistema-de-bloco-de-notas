@@ -19,7 +19,7 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/register', async (req, res) =>{
-    const{username, email, password} = req.body;
+    const { username, email, password } = req.body;
     const hash = await bcrypt.hash(password, 8);
   db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username,email, hash], (err) => {
     if (err) return res.status(500).send('Erro ao registrar');
