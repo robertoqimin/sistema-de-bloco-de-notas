@@ -1,8 +1,8 @@
-Bloco de Notas Online
+# Bloco de Notas Online
 
 Aplicação web full stack que permite aos usuários criarem, editarem e excluírem anotações com armazenamento persistente em banco de dados, além de contar com sistema de cadastro e login de usuários para controle de acesso.
 
-🚀 Tecnologias Utilizadas
+# 🚀 Tecnologias Utilizadas
 
 Node.js:
 Ambiente de execução JavaScript utilizado para desenvolver o servidor, gerenciar rotas, autenticação e integração com o banco de dados.
@@ -19,7 +19,7 @@ Banco de dados relacional responsável pelo armazenamento das informações dos 
 XAMPP:
 Ambiente de desenvolvimento local utilizado para hospedar e gerenciar o banco de dados durante a criação do projeto.
 
-🔐 Funcionalidades Implementadas
+# 🔐 Funcionalidades Implementadas
 
 👤 Sistema de Usuários
 
@@ -29,7 +29,7 @@ Ambiente de desenvolvimento local utilizado para hospedar e gerenciar o banco de
 
 ✔️ Associação de notas a usuários específicos
 
-📝 Sistema de Notas (CRUD)
+# 📝 Sistema de Notas (CRUD)
 
 ✔️ Criar notas
 
