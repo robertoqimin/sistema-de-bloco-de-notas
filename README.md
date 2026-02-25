@@ -4,23 +4,20 @@ Aplicação web full stack que permite aos usuários criarem, editarem e excluí
 
 🚀 Tecnologias Utilizadas
 
-Node.js
+Node.js:
 Ambiente de execução JavaScript utilizado para desenvolver o servidor, gerenciar rotas, autenticação e integração com o banco de dados.
 
-EJS
+EJS:
 Template engine usada para renderizar páginas HTML dinamicamente no servidor, exibindo dados personalizados para cada usuário autenticado.
 
-MySQL
+CSS3:
+Estilização e responsividade da interface.
+
+MySQL:
 Banco de dados relacional responsável pelo armazenamento das informações dos usuários e das notas.
 
-XAMPP
+XAMPP:
 Ambiente de desenvolvimento local utilizado para hospedar e gerenciar o banco de dados durante a criação do projeto.
-
-HTML5
-Estruturação das páginas da aplicação.
-
-CSS3
-Estilização e responsividade da interface.
 
 🔐 Funcionalidades Implementadas
 
