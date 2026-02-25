@@ -23,14 +23,23 @@ CSS3
 Estilização e responsividade da interface.
 
 🔐 Funcionalidades Implementadas
+
 👤 Sistema de Usuários
+
 ✔️ Cadastro de novos usuários
+
 ✔️ Controle de acesso às notas
+
 ✔️ Associação de notas a usuários específicos
 
 📝 Sistema de Notas (CRUD)
+
 ✔️ Criar notas
+
 ✔️ Visualizar anotações
+
 ✔️ Editar registros
+
 ✔️ Excluir notas
+
 ✔️ Armazenamento persistente no banco de dados
