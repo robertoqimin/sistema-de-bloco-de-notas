@@ -1,56 +1,141 @@
-        .edit-note-container {
-            max-width: 500px;
-            margin: 40px auto;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 32px 24px;
-        }
-        .edit-note-container h1 {
-            text-align: center;
-            margin-bottom: 24px;
-            color: #333;
-        }
-        .edit-note-container form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .edit-note-container label {
-            font-weight: 500;
-            margin-bottom: 4px;
-            color: #444;
-        }
-        .edit-note-container input[type="text"],
-        .edit-note-container textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-            background: #f9f9f9;
-            resize: vertical;
-        }
-        .edit-note-container button {
-            background: #1976d2;
-            color: #fff;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .edit-note-container button:hover {
-            background: #1565c0;
-        }
-        .edit-note-container .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #1976d2;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .edit-note-container .back-link:hover {
-            text-decoration: underline;
-        }
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Manrope", sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(214, 106, 77, 0.18), transparent 24rem),
+        radial-gradient(circle at bottom right, rgba(16, 110, 93, 0.16), transparent 28rem),
+        linear-gradient(145deg, #f4efe7 0%, #f8f7f3 45%, #edf3f1 100%);
+    color: #1f2937;
+}
+
+.editor-shell {
+    width: min(860px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 3rem 0 4rem;
+}
+
+.edit-note-container {
+    padding: 2rem;
+    border-radius: 28px;
+    border: 1px solid rgba(17, 24, 39, 0.08);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 24px 60px rgba(17, 24, 39, 0.08);
+    backdrop-filter: blur(18px);
+}
+
+.section-tag {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(214, 106, 77, 0.12);
+    color: #9a3412;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.editor-copy h1 {
+    margin: 1rem 0 0.75rem;
+    font-family: "Sora", sans-serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    color: #111827;
+}
+
+.editor-copy p {
+    margin: 0 0 1.75rem;
+    color: #4b5563;
+    line-height: 1.8;
+}
+
+.edit-note-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.edit-note-container label {
+    color: #374151;
+    font-weight: 700;
+}
+
+.edit-note-container input[type="text"],
+.edit-note-container textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.95rem 1rem;
+    border: 1px solid rgba(17, 24, 39, 0.12);
+    border-radius: 16px;
+    font-size: 1rem;
+    background: rgba(248, 250, 252, 0.95);
+    resize: vertical;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.edit-note-container input[type="text"]:focus,
+.edit-note-container textarea:focus {
+    border-color: rgba(180, 83, 9, 0.7);
+    box-shadow: 0 0 0 4px rgba(214, 106, 77, 0.12);
+    outline: none;
+}
+
+.edit-note-container textarea {
+    min-height: 220px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.75rem;
+}
+
+.back-link,
+.edit-note-container button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 1.4rem;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.back-link {
+    border: 1px solid rgba(17, 24, 39, 0.12);
+    background: rgba(255, 255, 255, 0.85);
+    color: #111827;
+}
+
+.edit-note-container button {
+    border: none;
+    background: linear-gradient(135deg, #d66a4d 0%, #b45309 100%);
+    color: #fff7ed;
+    cursor: pointer;
+    box-shadow: 0 18px 30px rgba(180, 83, 9, 0.22);
+}
+
+@media (max-width: 640px) {
+    .editor-shell {
+        width: min(100% - 1rem, 860px);
+        padding: 1.5rem 0 3rem;
+    }
+
+    .edit-note-container {
+        padding: 1.25rem;
+        border-radius: 22px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .back-link,
+    .edit-note-container button {
+        width: 100%;
+    }
+}

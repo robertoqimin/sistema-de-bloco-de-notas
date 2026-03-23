@@ -1,26 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/userLogin.css">
 </head>
 <body>
     <%- include ('partials/header')%>
-    <div class="login-container">
-        <h1>LOGIN</h1>
-        <form action="/login" method="post">
-            <label for="email">Email</label>
-            <input type="email" name="email" required>
-            <label for="password">Senha</label>
-            <input type="password" name="password" required>
-            <button type="submit">Logar</button>
-        </form>
-        <div class="register-link">
-            <a href="/register"><button>Não Tenho Conta</button></a>
-        </div>
-    </div>
+    <main class="auth-shell">
+        <section class="auth-panel">
+            <div class="auth-copy">
+                <span class="section-tag">Acesso seguro</span>
+                <h1>Entre e continue de onde parou.</h1>
+                <p>Gerencie suas notas com rapidez, sem distrações e com um visual pensado para foco.</p>
+                <ul class="auth-highlights">
+                    <li>Recupere suas anotações em segundos.</li>
+                    <li>Edite conteúdo sempre que precisar.</li>
+                    <li>Mantenha estudo, trabalho e rotina em um só lugar.</li>
+                </ul>
+            </div>
+
+            <div class="login-container">
+                <h2>Login</h2>
+                <form action="/login" method="post">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="voce@email.com" required>
+
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+
+                    <button type="submit">Entrar</button>
+                </form>
+                <div class="register-link">
+                    <a class="secondary-link" href="/register">Criar nova conta</a>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
