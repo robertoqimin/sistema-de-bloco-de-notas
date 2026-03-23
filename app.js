@@ -4,10 +4,10 @@ const db = require('./db')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken');
 
-const SECRET = 'chave-secreta';
-const PORT = 3000;
+const SECRET = process.env.JWT_SECRET || 'chave-secreta';
+const PORT = Number(process.env.PORT || 3000);
 
-app = express();
+const app = express();
 
 
 app.use(express.urlencoded({extended: true}))
@@ -45,5 +45,5 @@ app.use(routerAuth)
 app.use(routerNotes)
 
 app.listen(PORT, () =>{
-    console.log("porta 127.0.0.1:3000")
+    console.log(`servidor iniciado na porta ${PORT}`)
 });
