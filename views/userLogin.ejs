@@ -27,7 +27,7 @@
 
             <div class="login-container">
                 <h2>Login</h2>
-                <form action="/login" method="post">
+                <form action="/login" method="post" data-auth-form data-success-message="Login realizado. Redirecionando...">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="voce@email.com" required>
 
@@ -36,11 +36,13 @@
 
                     <button type="submit">Entrar</button>
                 </form>
+                <p class="form-feedback" data-form-feedback hidden aria-live="polite"></p>
                 <div class="register-link">
                     <a class="secondary-link" href="/register">Criar nova conta</a>
                 </div>
             </div>
         </section>
     </main>
+    <script src="/js/authForm.js"></script>
 </body>
 </html>
