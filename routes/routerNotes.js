@@ -5,7 +5,7 @@ const db = require('../db');
 const jwt = require('jsonwebtoken');
 const methodOverride = require('method-override');
 
-const SECRET = 'chave-secreta';
+const SECRET = process.env.JWT_SECRET || 'chave-secreta';
 
 router.get('/notes', (req, res) => {
     // Verifica se o usuário está autenticado

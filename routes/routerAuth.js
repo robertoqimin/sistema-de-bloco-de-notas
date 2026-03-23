@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const SECRET = 'chave-secreta';
+const SECRET = process.env.JWT_SECRET || 'chave-secreta';
 
 const path = require('path')
 
