@@ -1,58 +1,117 @@
-        body {
-            font-family: Arial, sans-serif;
-            background: #f7f7f7;
-            margin: 0;
-            padding: 0;
-        }
-        .note-container {
-            background: #fff;
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 32px 28px 24px 28px;
-            border-radius: 10px;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-        }
-        .note-title {
-            font-size: 1.7em;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #2d3748;
-        }
-        .note-content {
-            margin: 18px 0 22px 0;
-            font-size: 1.15em;
-            color: #444;
-            white-space: pre-wrap;
-        }
-        .note-container div {
-            margin-bottom: 8px;
-        }
-        hr {
-            margin: 24px 0;
-            border: none;
-            border-top: 1px solid #e2e8f0;
-        }
-        .note-actions {
-            display: flex;
-            justify-content: space-between;
-            gap: 18px;
-            align-items: center;
-        }
-        .note-actions a, .note-actions button {
-            background: #3182ce;
-            color: #fff;
-            padding: 8px 18px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .note-actions a:hover, .note-actions button:hover {
-            background: #225ea8;
-        }
-        .note-actions form {
-            display: inline;
-            margin: 0;
-        }
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Manrope", sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(214, 106, 77, 0.18), transparent 24rem),
+        radial-gradient(circle at bottom right, rgba(16, 110, 93, 0.16), transparent 28rem),
+        linear-gradient(145deg, #f4efe7 0%, #f8f7f3 45%, #edf3f1 100%);
+    color: #1f2937;
+}
+
+.note-shell {
+    width: min(900px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 3rem 0 4rem;
+}
+
+.note-container {
+    padding: 2rem;
+    border-radius: 28px;
+    border: 1px solid rgba(17, 24, 39, 0.08);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 24px 60px rgba(17, 24, 39, 0.08);
+    backdrop-filter: blur(18px);
+}
+
+.note-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+}
+
+.note-actions a,
+.note-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 1.2rem;
+    border-radius: 14px;
+    border: 1px solid rgba(17, 24, 39, 0.08);
+    background: rgba(255, 255, 255, 0.84);
+    color: #111827;
+    text-decoration: none;
+    font-size: 0.96rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.note-actions button {
+    background: #8f2d23;
+    border-color: #8f2d23;
+    color: #fff7ed;
+}
+
+.note-actions form {
+    margin: 0;
+}
+
+.note-header {
+    margin-top: 2rem;
+}
+
+.section-tag {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(214, 106, 77, 0.12);
+    color: #9a3412;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.note-title {
+    margin: 1rem 0 0.75rem;
+    font-family: "Sora", sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.08;
+    color: #111827;
+}
+
+.note-info {
+    margin: 0;
+    color: #4b5563;
+    line-height: 1.8;
+}
+
+.note-content {
+    margin-top: 1.75rem;
+    padding: 1.4rem;
+    border-radius: 22px;
+    background: rgba(248, 250, 252, 0.9);
+    border: 1px solid rgba(17, 24, 39, 0.08);
+    white-space: pre-wrap;
+    line-height: 1.9;
+    color: #374151;
+}
+
+@media (max-width: 640px) {
+    .note-shell {
+        width: min(100% - 1rem, 900px);
+        padding: 1.5rem 0 3rem;
+    }
+
+    .note-container {
+        padding: 1.25rem;
+        border-radius: 22px;
+    }
+
+    .note-actions a,
+    .note-actions button {
+        width: 100%;
+    }
+}

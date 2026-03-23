@@ -1,31 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/userRegister.css">
 </head>
 <body>
     <%- include('partials/header') %>
 
-    <div class="register-container">
-        <h1>Cadastro</h1>
-        <form action="/register" method="post">
-            <label for="username">Nome</label>
-            <input type="text" name="username" required>
+    <main class="auth-shell">
+        <section class="auth-panel">
+            <div class="auth-copy">
+                <span class="section-tag">Comece agora</span>
+                <h1>Crie sua conta e organize tudo em um único lugar.</h1>
+                <p>Um cadastro rápido para você começar a escrever, revisar e acompanhar suas ideias com mais clareza.</p>
+                <ul class="auth-highlights">
+                    <li>Cadastro simples e direto.</li>
+                    <li>Espaço ideal para notas pessoais e profissionais.</li>
+                    <li>Visual limpo para manter o foco no conteúdo.</li>
+                </ul>
+            </div>
 
-            <label for="email">Email</label>
-            <input type="email" name="email" required>
+            <div class="register-container">
+                <h2>Cadastro</h2>
+                <form action="/register" method="post">
+                    <label for="username">Nome</label>
+                    <input type="text" id="username" name="username" placeholder="Seu nome" required>
 
-            <label for="password">Senha</label>
-            <input type="password" name="password" required>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="voce@email.com" required>
 
-            <button type="submit">Cadastrar</button>
-        </form>
-        <div class="links">
-            <a href="/login"><button type="button">Já tenho conta</button></a>
-        </div>
-    </div>
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" placeholder="Crie uma senha" required>
+
+                    <button type="submit">Cadastrar</button>
+                </form>
+                <div class="links">
+                    <a class="secondary-link" href="/login">Já tenho conta</a>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

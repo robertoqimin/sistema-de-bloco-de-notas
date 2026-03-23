@@ -1,27 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Criar nota</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/notesCreate.css">
 </head>
 <body>
     <%- include('partials/header') %>
 
-    <div class="container">
-        <h1>Criar uma nova nota</h1>
-        <form action="/notes/create" method="POST">
-            <label for="title">Título:</label>
-            <input type="text" id="title" name="title" required>
+    <main class="editor-shell">
+        <section class="editor-container">
+            <div class="editor-copy">
+                <span class="section-tag">Nova anotação</span>
+                <h1>Criar uma nova nota</h1>
+                <p>Adicione um título claro, um resumo curto e desenvolva seu conteúdo com liberdade.</p>
+            </div>
 
-            <label for="info">Descrição:</label>
-            <input type="text" id="info" name="info" required>
+            <form action="/notes/create" method="POST">
+                <label for="title">Título</label>
+                <input type="text" id="title" name="title" placeholder="Ex: Reunião de planejamento" required>
 
-            <label for="content">Conteúdo:</label>
-            <textarea id="content" name="content" required></textarea>
+                <label for="info">Descrição</label>
+                <input type="text" id="info" name="info" placeholder="Resumo rápido da nota" required>
 
-            <button type="submit">Criar Nota</button>
-        </form>
-    </div>
+                <label for="content">Conteúdo</label>
+                <textarea id="content" name="content" placeholder="Escreva aqui os detalhes da sua nota..." required></textarea>
+
+                <div class="form-actions">
+                    <a href="/notes" class="secondary-link">Cancelar</a>
+                    <button type="submit">Salvar nota</button>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
 </html>

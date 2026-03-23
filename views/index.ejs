@@ -1,23 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bloco de Notas Online</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
     <%- include('partials/header') %>
 
     <main class="notas-interface">
-        <section class="notas-header">
-            <h1>Notas</h1>
+        <section class="hero-card">
+            <div class="hero-copy">
+                <span class="eyebrow">Organize ideias sem atrito</span>
+                <h1>Seu espaço para capturar, revisar e evoluir cada nota.</h1>
+                <p>
+                    Uma plataforma simples e elegante para estudo, trabalho e rotina pessoal.
+                    Escreva com foco, encontre tudo com rapidez e mantenha suas anotações sempre por perto.
+                </p>
+                <div class="hero-actions">
+                    <% if (typeof user !== 'undefined' && user) { %>
+                        <a class="primary-action" href="/notes">Abrir minhas notas</a>
+                    <% } else { %>
+                        <a class="primary-action" href="/login">Começar agora</a>
+                        <a class="secondary-action" href="/register">Criar conta</a>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="hero-panel" aria-hidden="true">
+                <div class="panel-card panel-card-main">
+                    <span class="panel-label">Hoje</span>
+                    <strong>Planejamento semanal</strong>
+                    <p>Resumo de tarefas, prioridades e ideias importantes em um só lugar.</p>
+                </div>
+                <div class="panel-grid">
+                    <div class="panel-card">
+                        <span class="metric">24/7</span>
+                        <p>Acesso rápido às suas anotações.</p>
+                    </div>
+                    <div class="panel-card">
+                        <span class="metric">100%</span>
+                        <p>Foco no que importa: escrever e organizar.</p>
+                    </div>
+                </div>
+            </div>
         </section>
-        <section class="notas-descricao" id="descrição">
-            <p> Plataforma online que permite aos usuários criar, editar, organizar e acessar anotações de forma prática e rápida. Ideal para estudos, trabalho ou uso pessoal.</p>
+
+        <section class="features-section" aria-label="Recursos da plataforma">
+            <article class="feature-card">
+                <span class="feature-number">01</span>
+                <h2>Crie com rapidez</h2>
+                <p>Registre pensamentos, tarefas e lembretes em uma interface limpa e direta.</p>
+            </article>
+            <article class="feature-card">
+                <span class="feature-number">02</span>
+                <h2>Edite quando quiser</h2>
+                <p>Atualize conteúdos conforme suas ideias evoluem, sem perder o contexto.</p>
+            </article>
+            <article class="feature-card">
+                <span class="feature-number">03</span>
+                <h2>Organize sua rotina</h2>
+                <p>Centralize estudos, trabalho e uso pessoal em um sistema fácil de acompanhar.</p>
+            </article>
+        </section>
+
+        <section class="notas-descricao">
+            <div class="description-card">
+                <span class="section-tag">Por que usar</span>
+                <h2>Menos distração, mais clareza.</h2>
+                <p>
+                    O Bloco de Notas Online foi pensado para quem precisa registrar informações com agilidade,
+                    manter tudo organizado e voltar ao conteúdo certo no momento certo.
+                </p>
+            </div>
         </section>
     </main>
-
-
 </body>
 </html>

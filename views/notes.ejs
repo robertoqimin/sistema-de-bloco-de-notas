@@ -2,18 +2,31 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minhas Notas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/notes.css">
 </head>
 <body>
     <%- include('partials/header') %>
 
 
-    <div class="container">
-        <h1>Minhas Notas</h1>
-        <div id="notes-container"></div>
-        <a href="/notes/create" class="new-note-btn">Criar nova nota</a>
-    </div>
+    <main class="notes-shell">
+        <section class="notes-hero">
+            <div>
+                <span class="section-tag">Painel pessoal</span>
+                <h1>Minhas notas</h1>
+                <p>Veja suas anotações em um só lugar, abra rapidamente o que precisa e continue escrevendo sem perder ritmo.</p>
+            </div>
+            <a href="/notes/create" class="new-note-btn">Criar nova nota</a>
+        </section>
+
+        <section class="notes-board">
+            <div id="notes-container" class="notes-grid"></div>
+        </section>
+    </main>
 
     <script src="/js/notes.js"></script>
 </body>
