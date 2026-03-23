@@ -17,7 +17,7 @@
             <div class="note-actions">
                 <a href="/notes">Voltar</a>
                 <a href="/notes/<%= note.id %>/edit">Editar nota</a>
-                <form action="/notes/<%= note.id %>/delete?_method=DELETE" method="POST">
+                <form action="/notes/<%= note.id %>/delete" method="POST">
                     <button type="submit" onclick="return confirm('Tem certeza que deseja deletar esta nota?');">Excluir nota</button>
                 </form>
             </div>

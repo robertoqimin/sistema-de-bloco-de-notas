@@ -1,10 +1,10 @@
 const express = require('express')
 const path = require('path')
-const db = require('./db')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken');
+const { JWT_SECRET } = require('./config');
+const verifySameOrigin = require('./middleware/verifySameOrigin');
 
-const SECRET = process.env.JWT_SECRET || 'chave-secreta';
 const PORT = Number(process.env.PORT || 3000);
 
 const app = express();
@@ -13,6 +13,7 @@ const app = express();
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cookieParser())
+app.use(verifySameOrigin)
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
@@ -24,12 +25,14 @@ app.use((req, res, next) => {
   const token = req.cookies?.token;
   if (token) {
     try {
-      req.user = jwt.verify(token, SECRET);
+      req.user = jwt.verify(token, JWT_SECRET);
       res.locals.user = req.user;
     } catch (err) {
+      req.user = null;
       res.locals.user = null;
     }
   } else {
+    req.user = null;
     res.locals.user = null;
   }
   next();

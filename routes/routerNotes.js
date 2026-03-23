@@ -2,197 +2,144 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const db = require('../db');
-const jwt = require('jsonwebtoken');
-const methodOverride = require('method-override');
+const authenticate = require('../middleware/auth');
 
-const SECRET = process.env.JWT_SECRET || 'chave-secreta';
-
-router.get('/notes', (req, res) => {
-    // Verifica se o usuário está autenticado
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
+function validateNoteInput({ title, info, content }) {
+    if (!title || !info || !content) {
+        return 'Preencha titulo, descricao e conteudo.';
     }
 
-    // Verifica o token JWT
-    jwt.verify(token, SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).send('Token inválido ou expirado.');
-        }
+    if (title.trim().length < 3) {
+        return 'O titulo deve ter pelo menos 3 caracteres.';
+    }
 
-        // Se o token for válido, renderiza a página home
-        res.render(path.join(__dirname, '../', 'views', 'notes'), { user: decoded });
-    });
+    if (info.trim().length < 3) {
+        return 'A descricao deve ter pelo menos 3 caracteres.';
+    }
+
+    return null;
+}
+
+router.get('/notes', authenticate, (req, res) => {
+    res.render(path.join(__dirname, '../', 'views', 'notes'), { user: req.user });
 });
 
 
-router.get('/notes/create', (req, res) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
-    }
-
-    jwt.verify(token, SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).send('Token inválido ou expirado.');
-        }
-
-        res.render(path.join(__dirname, '../', 'views', 'notesCreate'), { user: decoded });
-    });
+router.get('/notes/create', authenticate, (req, res) => {
+    res.render(path.join(__dirname, '../', 'views', 'notesCreate'), { user: req.user });
 });
 
 
-router.post('/notes/create', (req, res) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
+router.post('/notes/create', authenticate, (req, res) => {
+    const { title, info, content } = req.body;
+    const validationError = validateNoteInput({ title, info, content });
+
+    if (validationError) {
+        return res.status(400).send(validationError);
     }
 
-    jwt.verify(token, SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).send('Token inválido ou expirado.');
-        }
-
-        const { title, info, content } = req.body;    
-        db.query(
-            'INSERT INTO notes (title, info, content, username_id) VALUES (?, ?, ?, ?)',
-            [title, info, content, decoded.id],
-            (err) => {
-                if (err) {
-                    return res.status(500).send('Erro ao criar nota');
-                }
-                res.redirect('/notes');
+    db.query(
+        'INSERT INTO notes (title, info, content, username_id) VALUES (?, ?, ?, ?)',
+        [title.trim(), info.trim(), content.trim(), req.user.id],
+        (err) => {
+            if (err) {
+                return res.status(500).send('Erro ao criar nota');
             }
-        );
-    });
+            res.redirect('/notes');
+        }
+    );
 });
 
 
 
-router.get('/notes/list', (req, res) => {
-    const token = req.cookies.token;
-    if (!token) return res.status(401).json({ error: 'Token ausente' });
-
-    jwt.verify(token, SECRET, (err, decoded) => {
-        if (err) return res.status(401).json({ error: 'Token inválido' });
-
-        db.query('SELECT * FROM notes WHERE username_id = ?', [decoded.id], (err, results) => {
-            if (err) return res.status(500).json({ error: 'Erro ao buscar notas' });
-            res.json({ notes: results });
-        });
+router.get('/notes/list', authenticate, (req, res) => {
+    db.query('SELECT * FROM notes WHERE username_id = ?', [req.user.id], (err, results) => {
+        if (err) return res.status(500).json({ error: 'Erro ao buscar notas' });
+        res.json({ notes: results });
     });
 });
 
 
-router.get('/notes/:id', (req, res) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
+router.get('/notes/:id', authenticate, (req, res) => {
+    const noteId = req.params.id;
+    db.query(
+        'SELECT * FROM notes WHERE id = ? AND username_id = ?',
+        [noteId, req.user.id],
+        (err, results) => {
+            if (err) {
+                return res.status(500).send('Erro ao buscar nota');
+            }
+            if (results.length === 0) {
+                return res.status(404).send('Nota não encontrada');
+            }
+            res.render(path.join(__dirname, '../', 'views', 'note'), { note: results[0], user: req.user });
+        }
+    );
+});
+
+
+router.get('/notes/:id/edit', authenticate, (req, res) => {
+    const noteId = req.params.id;
+    db.query(
+        'SELECT * FROM notes WHERE id = ? AND username_id = ?',
+        [noteId, req.user.id],
+        (err, results) => {
+            if (err) {
+                return res.status(500).send('Erro ao buscar nota');
+            }
+            if (results.length === 0) {
+                return res.status(404).send('Nota não encontrada');
+            }
+            res.render(path.join(__dirname, '../', 'views', 'notesEdit'), { note: results[0], user: req.user });
+        }
+    );
+});
+
+
+router.post('/notes/:id/edit', authenticate, (req, res) => {
+    const noteId = req.params.id;
+    const { title, info, content } = req.body;
+    const validationError = validateNoteInput({ title, info, content });
+
+    if (validationError) {
+        return res.status(400).send(validationError);
     }
 
-    jwt.verify(token, SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).send('Token inválido ou expirado.');
-        }
-
-        const noteId = req.params.id;
-        db.query(
-            'SELECT * FROM notes WHERE id = ? AND username_id = ?',
-            [noteId, decoded.id],
-            (err, results) => {
-                if (err) {
-                    return res.status(500).send('Erro ao buscar nota');
-                }
-                if (results.length === 0) {
-                    return res.status(404).send('Nota não encontrada');
-                }
-                res.render(path.join(__dirname, '../', 'views', 'note'), { note: results[0], user: decoded });
+    db.query(
+        'UPDATE notes SET title = ?, info = ?, content = ? WHERE id = ? AND username_id = ?',
+        [title.trim(), info.trim(), content.trim(), noteId, req.user.id],
+        (err, result) => {
+            if (err) {
+                return res.status(500).send('Erro ao atualizar nota');
             }
-        );
-    });
+
+            if (result.affectedRows === 0) {
+                return res.status(404).send('Nota não encontrada');
+            }
+
+            res.redirect(`/notes/${noteId}`);
+        }
+    );
 });
 
+router.post('/notes/:id/delete', authenticate, (req, res) => {
+    const noteId = req.params.id;
 
-router.get('/notes/:id/edit', (req, res) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
-    }
-
-    jwt.verify(token, SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).send('Token inválido ou expirado.');
-        }
-
-        const noteId = req.params.id;
-        db.query(
-            'SELECT * FROM notes WHERE id = ? AND username_id = ?',
-            [noteId, decoded.id],
-            (err, results) => {
-                if (err) {
-                    return res.status(500).send('Erro ao buscar nota');
-                }
-                if (results.length === 0) {
-                    return res.status(404).send('Nota não encontrada');
-                }
-                res.render(path.join(__dirname, '../', 'views', 'notesEdit'), { note: results[0], user: decoded });
+    db.query(
+        'DELETE FROM notes WHERE id = ? AND username_id = ?',
+        [noteId, req.user.id],
+        (err, result) => {
+            if (err) {
+                return res.status(500).send('Erro ao deletar nota');
             }
-        );
-    });
-});
 
-
-router.post('/notes/:id/edit', (req, res) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
-    }
-
-    jwt.verify(token, SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).send('Token inválido ou expirado.');
-        }
-
-        const noteId = req.params.id;
-        const { title, info, content } = req.body;
-
-        db.query(
-            'UPDATE notes SET title = ?, info = ?, content = ? WHERE id = ? AND username_id = ?',
-            [title, info, content, noteId, decoded.id],
-            (err) => {
-                if (err) {
-                    return res.status(500).send('Erro ao atualizar nota');
-                }
-                res.redirect(`/notes/${noteId}`);
+            if (result.affectedRows === 0) {
+                return res.status(404).send('Nota não encontrada');
             }
-        );
-    });
-});
 
-router.post('/notes/:id/delete', (req, res) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).send('Acesso não autorizado. Faça login primeiro.');
-    }
-
-    jwt.verify(token, SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).send('Token inválido ou expirado.');
+            res.redirect('/notes');
         }
-
-        const noteId = req.params.id;
-
-        db.query(
-            'DELETE FROM notes WHERE id = ? AND username_id = ?',
-            [noteId, decoded.id],
-            (err) => {
-                if (err) {
-                    return res.status(500).send('Erro ao deletar nota');
-                }
-                res.redirect('/notes');
-            }
-        );
-    });
+    );
 });
 
 module.exports = router;
