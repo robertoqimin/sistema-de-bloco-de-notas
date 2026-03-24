@@ -2,17 +2,15 @@ services:
   app:
     build: .
     container_name: bloco-notas-app
-    env_file:
-      - .env
     ports:
       - "3000:3000"
     environment:
       PORT: 3000
-      JWT_SECRET: ${JWT_SECRET}
+      JWT_SECRET: uma-chave-segura
       DB_HOST: db
       DB_PORT: 3306
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+      DB_USER: appuser
+      DB_PASSWORD: minhaSenha123
       DB_NAME: dbnotas
     depends_on:
       db:
@@ -22,13 +20,11 @@ services:
   db:
     image: mysql:8.4
     container_name: bloco-notas-db
-    env_file:
-      - .env
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: minhaSenhaRoot123
       MYSQL_DATABASE: dbnotas
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: minhaSenha123
     ports:
       - "3306:3306"
     healthcheck:
