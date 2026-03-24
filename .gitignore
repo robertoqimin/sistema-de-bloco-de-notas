@@ -1,0 +1,15 @@
+node_modules/
+.env
+npm-debug.log*
+
+# Docker/build output accidentally redirected into files
+=
+CACHED
+ERROR
+[internal]
+exporting
+naming
+reading
+resolve
+transferring
+unpacking

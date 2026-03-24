@@ -36,60 +36,9 @@ Uma aplicação web full-stack para gerenciamento de notas pessoais, desenvolvid
 
 Antes de começar, certifique-se de ter instalado:
 
-- [Node.js](https://nodejs.org/) (versão 18 ou superior)
-- [npm](https://www.npmjs.com/) ou [yarn](https://yarnpkg.com/)
-- [MySQL](https://www.mysql.com/) (versão 8.0+) ou [XAMPP](https://www.apachefriends.org/) para desenvolvimento local
-- [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/) (opcional, para containerização)
+- [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/)
 
 ## 🛠️ Instalação e Configuração
-
-### Opção 1: Instalação Local (Desenvolvimento)
-
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/seu-usuario/sistema-de-bloco-de-notas.git
-   cd sistema-de-bloco-de-notas
-   ```
-
-2. **Instale as dependências:**
-   ```bash
-   npm install
-   ```
-
-3. **Configure o banco de dados:**
-   - Crie um banco de dados MySQL chamado `dbnotas`
-   - Execute o script `db.sql` para criar as tabelas:
-     ```sql
-     -- Execute o conteúdo do arquivo db.sql no seu MySQL
-     ```
-
-4. **Configure as variáveis de ambiente (opcional):**
-   Crie um arquivo `.env` na raiz do projeto:
-   ```env
-   PORT=3000
-   JWT_SECRET=sua-chave-secreta-aqui
-   DB_HOST=localhost
-   DB_PORT=3306
-   DB_USER=root
-   DB_PASSWORD=sua-senha
-   DB_NAME=dbnotas
-   ```
-
-   Se for rodar localmente sem Docker, use `DB_HOST=localhost` ou `127.0.0.1`.
-   O hostname `db` funciona apenas entre os contêineres do Docker Compose.
-
-5. **Inicie a aplicação:**
-   ```bash
-   # Modo desenvolvimento (com nodemon)
-   npm run dev
-
-   # Ou modo produção
-   npm start
-   ```
-
-   A aplicação estará disponível em `http://localhost:3000`.
-
-### Opção 2: Usando Docker (Recomendado)
 
 1. **Clone o repositório:**
    ```bash
@@ -105,6 +54,7 @@ Antes de começar, certifique-se de ter instalado:
    - A aplicação ficará disponível em `http://localhost:3000`
    - O MySQL roda em um contêiner separado na porta 3306
    - O banco é inicializado automaticamente com o arquivo `db.sql`
+   - As credenciais estão definidas diretamente em [docker-compose.yml](/home/roberto/Documents/GitHub/sistema-de-bloco-de-notas/docker-compose.yml)
 
 3. **Para parar os contêineres:**
    ```bash
