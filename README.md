@@ -75,6 +75,9 @@ Antes de começar, certifique-se de ter instalado:
    DB_NAME=dbnotas
    ```
 
+   Se for rodar localmente sem Docker, use `DB_HOST=localhost` ou `127.0.0.1`.
+   O hostname `db` funciona apenas entre os contêineres do Docker Compose.
+
 5. **Inicie a aplicação:**
    ```bash
    # Modo desenvolvimento (com nodemon)

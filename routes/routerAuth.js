@@ -8,6 +8,26 @@ const path = require('path')
 
 const db = require('../db')
 
+function isFetchRequest(req) {
+    return req.get('x-requested-with') === 'fetch' || req.accepts(['json', 'html']) === 'json';
+}
+
+function sendAuthError(req, res, status, message) {
+    if (isFetchRequest(req)) {
+        return res.status(status).json({ ok: false, message });
+    }
+
+    return res.status(status).send(message);
+}
+
+function sendAuthSuccess(req, res, redirectTo) {
+    if (isFetchRequest(req)) {
+        return res.json({ ok: true, redirectTo });
+    }
+
+    return res.redirect(redirectTo);
+}
+
 function validateRegisterInput({ username, email, password }) {
     if (!username || !email || !password) {
         return 'Preencha todos os campos.';
@@ -46,7 +66,7 @@ router.post('/register', async (req, res) =>{
     const validationError = validateRegisterInput({ username, email, password });
 
     if (validationError) {
-        return res.status(400).send(validationError);
+        return sendAuthError(req, res, 400, validationError);
     }
 
     const hash = await bcrypt.hash(password, 8);
@@ -54,9 +74,9 @@ router.post('/register', async (req, res) =>{
     'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
     [username.trim(), email.trim().toLowerCase(), hash],
     (err) => {
-    if (err?.code === 'ER_DUP_ENTRY') return res.status(409).send('Este email ja esta em uso.');
-    if (err) return res.status(500).send('Erro ao registrar');
-    res.redirect('/login');
+    if (err?.code === 'ER_DUP_ENTRY') return sendAuthError(req, res, 409, 'Este email ja esta em uso.');
+    if (err) return sendAuthError(req, res, 500, 'Erro ao registrar');
+    return sendAuthSuccess(req, res, '/login');
   });
 });
 
@@ -66,14 +86,14 @@ router.post('/login', (req, res) => {
     const validationError = validateLoginInput({ email, password });
 
     if (validationError) {
-        return res.status(400).send(validationError);
+        return sendAuthError(req, res, 400, validationError);
     }
 
     db.query('SELECT * FROM users WHERE email = ?', [email.trim().toLowerCase()], async (err, results) => {
-        if (err || results.length === 0) return res.status(401).send('Credenciais inválidas');
+        if (err || results.length === 0) return sendAuthError(req, res, 401, 'Credenciais inválidas');
         const user = results[0];
         const match = await bcrypt.compare(password, user.password);
-        if (!match) return res.status(401).send('Credenciais inválidas');
+        if (!match) return sendAuthError(req, res, 401, 'Credenciais inválidas');
         const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: '1h' });
 
         res.cookie('token', token, {
@@ -81,7 +101,7 @@ router.post('/login', (req, res) => {
             sameSite: 'lax',
             secure: isProduction
         });
-        res.redirect('/');
+        return sendAuthSuccess(req, res, '/');
     });
 });
 
