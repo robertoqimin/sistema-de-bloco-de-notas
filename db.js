@@ -1,25 +1,7 @@
-require('./loadEnv');
-
-const fs = require('fs');
 const mysql = require('mysql2');
 
-function resolveDbHost() {
-  const configuredHost = process.env.DB_HOST;
-  const isRunningInDocker = fs.existsSync('/.dockerenv');
-
-  if (!configuredHost) {
-    return isRunningInDocker ? 'db' : '127.0.0.1';
-  }
-
-  if (configuredHost === 'db' && !isRunningInDocker) {
-    return '127.0.0.1';
-  }
-
-  return configuredHost;
-}
-
 const config = {
-  host: resolveDbHost(),
+  host: process.env.DB_HOST || 'db',
   port: Number(process.env.DB_PORT || 3306),
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
