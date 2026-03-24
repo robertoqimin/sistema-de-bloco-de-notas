@@ -1,15 +1,15 @@
 # Bloco de Notas Online
 
-Aplicacao web para cadastro de usuarios e gerenciamento de notas pessoais. O projeto usa Node.js com Express, renderizacao em EJS, autenticacao com JWT em cookie HTTP-only e persistencia em MySQL.
+Aplicação web para cadastro de usuários e gerenciamento de notas pessoais. O projeto usa Node.js com Express, renderização em EJS, autenticação com JWT em cookie HTTP-only e persistência em MySQL.
 
 ## Funcionalidades
 
-- Cadastro e login de usuarios
-- Logout com limpeza do cookie de autenticacao
+- Cadastro e login de usuários
+- Logout com limpeza do cookie de autenticação
 - CRUD completo de notas
-- Isolamento das notas por usuario autenticado
-- Validacoes basicas de formulario no backend
-- Protecao de rotas autenticadas e verificacao de mesma origem para requisicoes `POST`
+- Isolamento das notas por usuário autenticado
+- Validações básicas de formulário no backend
+- Proteção de rotas autenticadas e verificação de mesma origem para requisições `POST`
 - Ambiente pronto para subir com Docker Compose
 
 ## Stack
@@ -52,7 +52,7 @@ sistema-de-bloco-de-notas/
 └── package.json
 ```
 
-## Pre-requisitos
+## Pré-requisitos
 
 ### Com Docker
 
@@ -64,11 +64,11 @@ sistema-de-bloco-de-notas/
 - Node.js 20+
 - MySQL 8+
 
-## Variaveis de ambiente
+## Variáveis de ambiente
 
-`JWT_SECRET` e obrigatoria. As demais possuem valor padrao no projeto.
+`JWT_SECRET` é obrigatória. As demais possuem valor padrão no projeto.
 
-Exemplo para execucao local:
+Exemplo para execução local:
 
 ```env
 PORT=3000
@@ -81,7 +81,7 @@ DB_NAME=dbnotas
 NODE_ENV=development
 ```
 
-Defaults usados em `db.js`:
+Valores padrão usados em `db.js`:
 
 - `DB_HOST=db`
 - `DB_PORT=3306`
@@ -97,24 +97,24 @@ Defaults usados em `db.js`:
 docker compose up --build
 ```
 
-A aplicacao fica disponivel em `http://localhost:3000`.
+A aplicação fica disponível em `http://localhost:3000`.
 
-Os servicos definidos hoje sao:
+Os serviços definidos hoje são:
 
-- `app`: aplica o `Dockerfile`, expoe a porta `3000` e injeta as variaveis da aplicacao
-- `db`: usa a imagem `mysql:8.4`, cria o banco `dbnotas` e executa o script `db.sql` na inicializacao
+- `app`: aplica o `Dockerfile`, expõe a porta `3000` e injeta as variáveis da aplicação
+- `db`: usa a imagem `mysql:8.4`, cria o banco `dbnotas` e executa o script `db.sql` na inicialização
 
-O `app` depende do `healthcheck` do MySQL, e o backend tambem tenta reconectar automaticamente ao banco em caso de falha inicial.
+O `app` depende do `healthcheck` do MySQL, e o backend também tenta reconectar automaticamente ao banco em caso de falha inicial.
 
-### Execucao local
+### Execução local
 
-1. Instale as dependencias:
+1. Instale as dependências:
 
 ```bash
 npm install
 ```
 
-2. Garanta que o MySQL esteja em execucao e que o banco/usuario estejam configurados para os valores do seu ambiente.
+2. Garanta que o MySQL esteja em execução e que o banco/usuário estejam configurados para os valores do seu ambiente.
 
 3. Execute o script SQL inicial:
 
@@ -122,13 +122,13 @@ npm install
 mysql -u root -p < db.sql
 ```
 
-4. Inicie a aplicacao:
+4. Inicie a aplicação:
 
 ```bash
 npm run dev
 ```
 
-Ou, para execucao sem `nodemon`:
+Ou, para execução sem `nodemon`:
 
 ```bash
 npm start
@@ -140,11 +140,11 @@ O arquivo `db.sql` cria:
 
 - banco `dbnotas`
 - tabela `users`
-- tabela `notes`, relacionada ao usuario dono da nota
+- tabela `notes`, relacionada ao usuário dono da nota
 
 ## Rotas principais
 
-### Publicas
+### Públicas
 
 - `GET /`
 - `GET /register`
@@ -164,7 +164,7 @@ O arquivo `db.sql` cria:
 - `POST /notes/:id/edit`
 - `POST /notes/:id/delete`
 
-## Scripts disponiveis
+## Scripts disponíveis
 
 ```bash
 npm start
@@ -172,9 +172,9 @@ npm run dev
 npm test
 ```
 
-Observacao: o script `npm test` ainda nao possui testes implementados e retorna erro por padrao.
+Observação: o script `npm test` ainda não possui testes implementados e retorna erro por padrão.
 
-## Comandos uteis com Docker
+## Comandos úteis com Docker
 
 ```bash
 docker compose up --build
