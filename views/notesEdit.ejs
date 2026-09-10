@@ -3,39 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Nota</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/notesEdit.css">
+    <title>Editar nota · Notespace</title>
+    <link rel="stylesheet" href="/css/editor.css">
 </head>
 <body>
     <%- include('partials/header') %>
-
-    <main class="editor-shell">
-        <div class="edit-note-container">
-            <div class="editor-copy">
-                <span class="section-tag">Atualize sua nota</span>
-                <h1>Editar nota</h1>
-                <p>Refine o texto, ajuste a descrição e mantenha seu conteúdo sempre atualizado.</p>
-            </div>
-
-            <form action="/notes/<%= note.id %>/edit" method="POST">
-                <label for="title">Título</label>
-                <input type="text" id="title" name="title" value="<%= note.title %>" required>
-
-                <label for="info">Informações</label>
-                <input type="text" id="info" name="info" value="<%= note.info %>">
-
-                <label for="content">Conteúdo</label>
-                <textarea id="content" name="content" rows="8" required><%= note.content %></textarea>
-
-                <div class="form-actions">
-                    <a class="back-link" href="/notes/<%= note.id %>">Cancelar</a>
-                    <button type="submit">Salvar alterações</button>
-                </div>
-            </form>
-        </div>
-    </main>
+    <%- include('partials/editor', { editing: true, document: note }) %>
+    <script src="/js/editor.js"></script>
 </body>
 </html>

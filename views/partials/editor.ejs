@@ -1,0 +1,37 @@
+<main class="editor-shell">
+    <form class="document-form" action="<%= editing ? '/notes/' + document.id + '/edit' : '/notes/create' %>" method="POST">
+        <div class="document-heading">
+            <div class="document-name">
+                <label class="sr-only" for="title">Título da nota</label>
+                <input id="title" name="title" placeholder="Documento sem título" value="<%= editing ? document.title : '' %>" minlength="3" required>
+                <span id="save-status" role="status"><%= editing ? 'Edite e salve suas alterações' : 'Salve para criar sua nota' %></span>
+            </div>
+            <div class="document-actions">
+                <a href="<%= editing ? '/notes/' + document.id : '/notes' %>">Cancelar</a>
+                <button class="save-button" type="submit">Salvar<%= editing ? ' alterações' : ' nota' %></button>
+            </div>
+        </div>
+        <div class="editor-toolbar" aria-label="Ferramentas de visualização">
+            <a href="/notes">Meus documentos</a>
+            <span class="toolbar-divider" aria-hidden="true"></span>
+            <label for="zoom">Zoom</label>
+            <select id="zoom"><option value="1">100%</option><option value="1.25">125%</option><option value="1.5">150%</option></select>
+            <span class="toolbar-divider" aria-hidden="true"></span>
+            <span>Texto simples</span>
+            <span class="editing-mode">✎ Edição</span>
+        </div>
+        <div class="document-workspace">
+            <aside class="document-outline"><h2>Seu documento</h2><p>Um espaço para suas ideias.</p><a href="#info">Descrição</a><a href="#content">Conteúdo da nota</a></aside>
+            <div class="page-area">
+                <div class="page-ruler" aria-hidden="true"></div>
+                <section class="document-page" aria-label="Página da nota">
+                    <label class="field-label" for="info">Descrição</label>
+                    <input id="info" name="info" placeholder="Adicione um breve resumo" value="<%= editing ? document.info : '' %>" minlength="3" required>
+                    <label class="sr-only" for="content">Conteúdo da nota</label>
+                    <textarea id="content" name="content" placeholder="Comece a escrever aqui…" required><%= editing ? document.content : '' %></textarea>
+                </section>
+                <div class="document-footer"><span id="word-count">0 palavras</span><span>As alterações são salvas ao clicar em Salvar.</span></div>
+            </div>
+        </div>
+    </form>
+</main>

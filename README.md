@@ -112,6 +112,22 @@ Os serviços definidos hoje são:
 
 O `app` depende do `healthcheck` do MySQL, e o backend também tenta reconectar automaticamente ao banco em caso de falha inicial.
 
+### Atualização automática durante o desenvolvimento
+
+O Compose monta os arquivos locais em `/app` e executa o Nodemon com monitoramento por polling. Ao salvar arquivos JavaScript, EJS ou CSS, a aplicação reinicia no mesmo contêiner. Atualize a página no navegador para ver as mudanças.
+
+Para aplicar esta configuração a um ambiente já iniciado, execute uma vez:
+
+```bash
+docker compose up -d --build app
+```
+
+O Compose poderá recriar somente o serviço `app` nessa primeira aplicação da configuração. Depois, alterações no código não exigem excluir nem recriar o contêiner. O volume do banco é preservado.
+
+As dependências ficam em um volume separado, sem usar o `node_modules` do computador. Se alterar `package.json` e `package-lock.json`, execute `docker compose restart app` para reinstalá-las. Mudanças nas variáveis do `.env` exigem `docker compose up -d app`. Alterações em `db.sql` não são aplicadas automaticamente a um banco existente.
+
+Essa configuração do Compose é voltada ao desenvolvimento. A imagem do `Dockerfile` continua iniciando com `npm start` quando executada diretamente.
+
 ### Execução local
 
 1. Instale as dependências:

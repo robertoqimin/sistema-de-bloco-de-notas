@@ -1,10 +1,16 @@
+@import url("/css/theme.css");
+
+* { box-sizing: border-box; }
+
+a:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+
 header {
     position: sticky;
     top: 0;
     z-index: 20;
     backdrop-filter: blur(18px);
-    background: rgba(248, 247, 243, 0.7);
-    border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .navbar {
@@ -31,7 +37,7 @@ header {
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #111827;
+    color: var(--color-text);
 }
 
 .navbar a {
@@ -45,10 +51,10 @@ header {
 .navbar button {
     min-height: 44px;
     padding: 0.7rem 1.1rem;
-    border: 1px solid rgba(17, 24, 39, 0.08);
+    border: 1px solid var(--color-border);
     border-radius: 14px;
-    background: rgba(255, 255, 255, 0.8);
-    color: #111827;
+    background: var(--color-surface);
+    color: var(--color-primary);
     cursor: pointer;
     font-size: 0.96rem;
     font-weight: 700;
@@ -57,8 +63,8 @@ header {
 
 .navbar button:hover {
     transform: translateY(-1px);
-    box-shadow: 0 12px 24px rgba(17, 24, 39, 0.08);
-    background: #ffffff;
+    box-shadow: 0 12px 24px var(--color-shadow);
+    background: var(--color-surface-muted);
 }
 
 @media (max-width: 640px) {

@@ -22,7 +22,12 @@ function createNoteCard(note) {
     const info = document.createElement('p');
     info.textContent = note.info;
 
-    link.append(label, title, info);
+    const preview = document.createElement('div');
+    preview.className = 'note-preview';
+    preview.setAttribute('aria-hidden', 'true');
+    preview.textContent = (note.content || '').slice(0, 450);
+
+    link.append(preview, label, title, info);
 
     return link;
 }
