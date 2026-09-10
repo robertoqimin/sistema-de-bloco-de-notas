@@ -1,0 +1,51 @@
+# Dependências e caches do Node.js
+node_modules/
+.npm/
+.cache/
+.eslintcache
+
+# Variáveis de ambiente locais (manter os modelos versionáveis)
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Logs e diagnósticos
+logs/
+*.log
+report.*.json
+*.pid
+*.pid.lock
+
+# Cobertura de testes e arquivos gerados
+coverage/
+.nyc_output/
+/dist/
+/build/
+*.tsbuildinfo
+
+# Arquivos temporários
+/tmp/
+/temp/
+*.tmp
+*.swp
+*.swo
+*~
+
+# Configurações pessoais de editores
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# Arquivos do sistema operacional
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Arquivos de bloqueio do LibreOffice e Microsoft Office
+.~lock.*#
+~$*

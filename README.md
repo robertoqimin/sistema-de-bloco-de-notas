@@ -93,11 +93,17 @@ Valores padrão usados em `db.js`:
 
 ### Docker Compose
 
+Crie o arquivo `.env` a partir de `.env.example`, caso ainda não exista, e defina `JWT_SECRET` e `DB_PASSWORD`. Use um usuário de aplicação em `DB_USER` (por exemplo, `appuser`, não `root`). O Compose lê esse arquivo automaticamente.
+
 ```bash
-docker compose up --build
+docker compose up --build -d
 ```
 
-A aplicação fica disponível em `http://localhost:3000`.
+A aplicação fica disponível em `http://localhost:3000` (ou na porta definida em `PORT`). O comando inicia a aplicação e o MySQL, aguardando o banco e suas tabelas estarem prontos.
+
+Entre os contêineres, a aplicação usa `db:3306`; o MySQL fica acessível apenas pela rede interna do Compose, sem ocupar uma porta no computador. `DB_HOST` e `DB_PORT` do `.env` servem para execução fora do Docker. O banco é `dbnotas`, conforme `db.sql`. A senha de root é gerada pelo MySQL na primeira inicialização.
+
+Os dados ficam persistidos no volume `mysql_data`. As credenciais e o script `db.sql` são aplicados na primeira inicialização de um volume vazio; alterar o `.env` não altera usuários de um banco já existente.
 
 Os serviços definidos hoje são:
 

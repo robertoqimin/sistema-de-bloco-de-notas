@@ -3,14 +3,15 @@ services:
     build: .
     container_name: bloco-notas-app
     ports:
-      - "3000:3000"
+      - "${PORT:-3000}:3000"
     environment:
       PORT: 3000
-      JWT_SECRET: uma-chave-segura
+      NODE_ENV: ${NODE_ENV:-development}
+      JWT_SECRET: ${JWT_SECRET:?Defina JWT_SECRET no arquivo .env}
       DB_HOST: db
       DB_PORT: 3306
-      DB_USER: appuser
-      DB_PASSWORD: minhaSenha123
+      DB_USER: ${DB_USER:-appuser}
+      DB_PASSWORD: ${DB_PASSWORD:?Defina DB_PASSWORD no arquivo .env}
       DB_NAME: dbnotas
     depends_on:
       db:
@@ -21,17 +22,15 @@ services:
     image: mysql:8.4
     container_name: bloco-notas-db
     environment:
-      MYSQL_ROOT_PASSWORD: minhaSenhaRoot123
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
       MYSQL_DATABASE: dbnotas
-      MYSQL_USER: appuser
-      MYSQL_PASSWORD: minhaSenha123
-    ports:
-      - "3306:3306"
+      MYSQL_USER: ${DB_USER:-appuser}
+      MYSQL_PASSWORD: ${DB_PASSWORD:?Defina DB_PASSWORD no arquivo .env}
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "mysqladmin ping -h 127.0.0.1 -P 3306 -u$$MYSQL_USER -p$$MYSQL_PASSWORD --protocol=tcp"
+          "MYSQL_PWD=\"$$MYSQL_PASSWORD\" mysql -h 127.0.0.1 -P 3306 -u\"$$MYSQL_USER\" --protocol=tcp \"$$MYSQL_DATABASE\" -e 'SELECT 1 FROM users LIMIT 1; SELECT 1 FROM notes LIMIT 1;'"
         ]
       interval: 10s
       timeout: 5s
